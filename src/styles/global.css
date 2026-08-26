@@ -7,7 +7,12 @@
 }
 
 body {
-  background: var(--color-base);
+  background-color: var(--color-base);
+  background-image:
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center top;
   color: var(--color-text);
   font-family: 'Inter', sans-serif;
 }
