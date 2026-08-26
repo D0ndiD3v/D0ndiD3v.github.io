@@ -28,7 +28,22 @@ import HeaderLink from './HeaderLink.astro';
 
 <script>
 	import { animate } from "motion";
-	animate(".accent-bar", { opacity: [0, 1], scaleX: [0, 1] }, { duration: 0.8, easing: "ease-out" });
+
+const accentBar = document.querySelector(".accent-bar");
+
+if (accentBar) {
+	animate(
+		accentBar,
+		{
+			opacity: [0, 1],
+			scaleX: [0, 1],
+		},
+		{
+			duration: 0.8,
+			ease: "easeOut",
+		}
+	);
+}
 </script>
 
 <style>
