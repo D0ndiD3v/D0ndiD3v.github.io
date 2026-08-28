@@ -6,15 +6,20 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { readingTime?: number };
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, readingTime } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
 			.hero-image {
 				width: 100%;
 			}
@@ -48,6 +53,9 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				color: var(--color-accent-secondary);
 				font-family: 'IBM Plex Mono', monospace;
 			}
+			.reading-time {
+				font-family: 'IBM Plex Mono', monospace;
+			}
 			.last-updated-on {
 				font-style: italic;
 			}
@@ -58,6 +66,21 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				transform: rotate(-2deg);
 				display: inline-block;
 				margin: 0.5em 0;
+			}
+			.tags {
+				display: flex;
+				gap: 0.5em;
+				justify-content: center;
+				flex-wrap: wrap;
+				margin-top: 0.5em;
+			}
+			.tag {
+				font-family: 'IBM Plex Mono', monospace;
+				font-size: 0.8rem;
+				padding: 0.2em 0.6em;
+				border: 1px solid var(--color-accent-secondary);
+				border-radius: 4px;
+				color: var(--color-accent-secondary);
 			}
 		</style>
 	</head>
@@ -73,6 +96,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					<div class="title">
 						<div class="date">
 							<FormattedDate date={pubDate} />
+							{readingTime && <span class="reading-time"> · {readingTime} min read</span>}
 							{
 								updatedDate && (
 									<div class="last-updated-on">
@@ -82,6 +106,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 							}
 						</div>
 						<h1>{title}</h1>
+						{tags && tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag: string) => <span class="tag">{tag}</span>)}
+							</div>
+						)}
 						<hr />
 					</div>
 					<slot />
