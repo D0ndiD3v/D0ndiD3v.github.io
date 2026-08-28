@@ -2,7 +2,6 @@
 title: 'Test blog post'
 description: 'Test desc'
 pubDate: 2026-08-28
-heroImage: '../../assets/your-image.jpg'
 size: 'large'
 tags: ['test']
 ---
