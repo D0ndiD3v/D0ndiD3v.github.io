@@ -192,7 +192,7 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 ```markdown
 <abbr title="Graphics Interchange Format">GIF</abbr> is a bitmap image format.
 
-H<sub>2</sub>O
+H<sub>2</sub>]
 
 X<sup>n</sup> + Y<sup>n</sup> = Z<sup>n</sup>
 
