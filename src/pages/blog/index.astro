@@ -124,7 +124,7 @@ function fallbackTexture(id: string) {
 
 	const width = 700;
 	const height = 700;
-	const cellSize = 6;
+	const cellSize = 4;
 	const cols = Math.floor(width / cellSize) + 1;
 	const rows = Math.floor(height / cellSize) + 1;
 	const noiseScale = 0.03;
@@ -148,7 +148,7 @@ function fallbackTexture(id: string) {
 		const level = -0.5 + t;
 		const color = lerpColor(primary, secondary, t);
 		const d = marchingSquaresPaths(grid, cols, rows, cellSize, level);
-		paths += `<path d='${d}' stroke='${color}' fill='none' stroke-width='1' opacity='0.45'/>`;
+		paths += `<path d='${d}' stroke='${color}' fill='none' stroke-width='1' opacity='0.45' stroke-linecap='round' stroke-linejoin='round'/>`;
 	}
 
 	const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height}' viewBox='0 0 ${width} ${height}'>${paths}</svg>`;
