@@ -3,6 +3,7 @@ title: 'Notes on a species that can barely walk'
 description: 'First devlog: what this blog is, why my spiders looked like headcrabs, and how a favorite color survives generations.'
 pubDate: 2026-08-30
 size: 'large'
+heroImage: '../../assets/4legsissues.png'
 tags: ['spider-sim', 'devlog', 'godot']
 ---
 
