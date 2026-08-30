@@ -10,7 +10,7 @@ This is going to be mostly this: a problem, what I tried, why I landed where I d
 
 ## The bunny-hopping problem
 
-For a while, my spiders had a slight *body double* problem. The legs moved, but the body, well... didn't. Every set of legs took their step in perfect unison, which meant the whole gait looked less like walking and more like a slightly panicked bunny, hopping through the grass, except the body never actually hopped. It just sat there, hovering calmly, while four legs flailed beside it like an afterthought.
+For a while, my spiders had a slight *problem*. The legs moved, but the body, well... didn't. Every set of legs took their step in perfect unison, which meant the whole gait looked less like walking and more like a slightly panicked bunny, hopping through the grass, except the body never actually hopped. It just sat there, hovering calmly, while four legs flailed beside it like an afterthought.
 
 <span class="margin-note">That was an interesting sight, I'm sure i've seen something like that already, I thought to myself.</span>
 
