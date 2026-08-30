@@ -72,12 +72,22 @@ function marchingSquaresPaths(
 					`M ${points[0][0].toFixed(1)} ${points[0][1].toFixed(1)} L ${points[1][0].toFixed(1)} ${points[1][1].toFixed(1)}`,
 				);
 			} else if (points.length === 4) {
-				segments.push(
-					`M ${points[0][0].toFixed(1)} ${points[0][1].toFixed(1)} L ${points[1][0].toFixed(1)} ${points[1][1].toFixed(1)}`,
-				);
-				segments.push(
-					`M ${points[2][0].toFixed(1)} ${points[2][1].toFixed(1)} L ${points[3][0].toFixed(1)} ${points[3][1].toFixed(1)}`,
-				);
+				// points order is [top, right, bottom, left]
+				if (tl >= threshold && br >= threshold) {
+					segments.push(
+						`M ${points[0][0].toFixed(1)} ${points[0][1].toFixed(1)} L ${points[3][0].toFixed(1)} ${points[3][1].toFixed(1)}`,
+					);
+					segments.push(
+						`M ${points[2][0].toFixed(1)} ${points[2][1].toFixed(1)} L ${points[1][0].toFixed(1)} ${points[1][1].toFixed(1)}`,
+					);
+				} else {
+					segments.push(
+						`M ${points[0][0].toFixed(1)} ${points[0][1].toFixed(1)} L ${points[1][0].toFixed(1)} ${points[1][1].toFixed(1)}`,
+					);
+					segments.push(
+						`M ${points[2][0].toFixed(1)} ${points[2][1].toFixed(1)} L ${points[3][0].toFixed(1)} ${points[3][1].toFixed(1)}`,
+					);
+				}
 			}
 		}
 	}
@@ -112,8 +122,8 @@ function fallbackTexture(id: string) {
 	const rng = mulberry32(seed);
 	const noise2D = createNoise2D(rng);
 
-	const width = 400;
-	const height = 300;
+	const width = 700;
+	const height = 700;
 	const cellSize = 6;
 	const cols = Math.floor(width / cellSize) + 1;
 	const rows = Math.floor(height / cellSize) + 1;
