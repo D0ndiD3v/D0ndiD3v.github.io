@@ -127,7 +127,7 @@ function fallbackTexture(id: string) {
 	const cellSize = 4;
 	const cols = Math.floor(width / cellSize) + 1;
 	const rows = Math.floor(height / cellSize) + 1;
-	const noiseScale = 0.03;
+	const noiseScale = 0.025;
 
 	const grid: number[][] = [];
 	for (let j = 0; j < rows; j++) {
@@ -138,7 +138,7 @@ function fallbackTexture(id: string) {
 		grid.push(row);
 	}
 
-	const levelCount = 11;
+	const levelCount = 10;
 	const primary = '#33513F';
 	const secondary = '#9C6B45';
 	let paths = '';
