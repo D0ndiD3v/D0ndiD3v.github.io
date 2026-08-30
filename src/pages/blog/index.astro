@@ -54,7 +54,7 @@ function fallbackTexture(id: string) {
 	}
 
 	const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'>${paths}</svg>`;
-	return `linear-gradient(var(--color-panel), var(--color-panel)), url("data:image/svg+xml,${svg}")`;
+	return `url("data:image/svg+xml,${svg}"), linear-gradient(var(--color-panel), var(--color-panel))`;
 }
 ---
 
