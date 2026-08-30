@@ -1,30 +1,175 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { fallbackTexture } from '../utils/contourTexture';
+
+const recentPosts = (await getCollection('blog'))
+	.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.identity {
+				text-align: center;
+				padding: 2em 0 1em 0;
+			}
+			.identity h1 {
+				font-size: 2.4em;
+				margin-bottom: 0.3em;
+			}
+			.identity p {
+				color: var(--color-text);
+				opacity: 0.8;
+				max-width: 520px;
+				margin: 0 auto 1.5em auto;
+			}
+			.cta {
+				display: inline-block;
+				padding: 0.7em 1.6em;
+				border: 1px solid var(--color-accent-secondary);
+				border-radius: 6px;
+				color: var(--color-accent-secondary);
+				text-decoration: none;
+				font-family: 'IBM Plex Mono', monospace;
+				transition: 0.3s ease;
+			}
+			.cta:hover {
+				background: var(--color-accent-secondary);
+				color: var(--color-base);
+			}
+			.recent-heading {
+				text-align: center;
+				margin: 3em 0 1em 0;
+				font-family: 'IBM Plex Mono', monospace;
+				font-size: 0.9em;
+				letter-spacing: 0.05em;
+				color: var(--color-accent-primary);
+				text-transform: uppercase;
+			}
+			.mini-mosaic {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1rem;
+				list-style: none;
+				margin: 0 0 2em 0;
+				padding: 0;
+			}
+			.mini-mosaic li {
+				border-radius: 12px;
+				overflow: hidden;
+				position: relative;
+				height: 180px;
+				background: var(--color-panel);
+				border: 1px solid var(--color-border);
+			}
+			.mini-mosaic a {
+				display: block;
+				height: 100%;
+				width: 100%;
+				text-decoration: none;
+				position: relative;
+			}
+			.mini-mosaic img,
+			.mini-mosaic .fallback-bg {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+			.mini-mosaic .fallback-bg {
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
+			}
+			.mini-mosaic .caption {
+				position: absolute;
+				inset: 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				padding: 0.8rem;
+				background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+			}
+			.mini-mosaic .title {
+				margin: 0;
+				color: var(--color-accent-secondary);
+				font-family: 'Bricolage Grotesque', sans-serif;
+				font-size: 0.95rem;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			.mini-mosaic .date {
+				margin: 0.2rem 0 0 0;
+				color: var(--color-text);
+				font-family: 'IBM Plex Mono', monospace;
+				font-size: 0.75rem;
+			}
+			.quick-links {
+				display: flex;
+				justify-content: center;
+				gap: 1.5em;
+				margin-bottom: 1em;
+			}
+			.quick-links a {
+				font-family: 'IBM Plex Mono', monospace;
+				font-size: 0.85em;
+			}
+
+			@media (max-width: 720px) {
+				.mini-mosaic {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>Welcome to my page!</h1>
-			<p>
-				Test test test
-			</p>
-			<p>
-				Test 123
-			</p>
-			<p>Here are a few ideas:</p>
-			<ul>
-				<li>jebac</li>
-				<li>biede</li>
+			<div class="identity">
+				<h1>This is where an engineering brain pokes at game systems.</h1>
+				<p>This isn't necessarily a showcase of finished projects, it's more of a notebook of chasing dreams until they click. Expect as much dead ends and ideas driven purely by intuition as successful projects and interesting experiments.</p>
+				<a class="cta" href="/blog">Read the devlogs →</a>
+			</div>
+
+			<p class="recent-heading">Recent entries</p>
+			<ul class="mini-mosaic">
+				{
+					recentPosts.map((post) => (
+						<li>
+							<a href={`/blog/${post.id}/`}>
+								{post.data.heroImage ? (
+									<Image width={400} height={400} src={post.data.heroImage} alt="" />
+								) : (
+									<div class="fallback-bg" style={`background: ${fallbackTexture(post.id)};`} />
+								)}
+								<div class="caption">
+									<h4 class="title">{post.data.title}</h4>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+								</div>
+							</a>
+						</li>
+					))
+				}
 			</ul>
+
+			<div class="quick-links">
+				<a href="/blog">Blog</a>
+				<a href="/about">About</a>
+				<a href="https://github.com/D0ndiD3v" target="_blank">GitHub</a>
+			</div>
 		</main>
 		<Footer />
 	</body>
