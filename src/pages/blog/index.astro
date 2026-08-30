@@ -65,14 +65,22 @@ function fallbackTexture(id: string) {
 				text-decoration: none;
 				position: relative;
 			}
-			.mosaic img,
-			.mosaic .fallback-bg {
+			.mosaic img {
 				position: absolute;
 				inset: 0;
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
 				transition: transform 0.4s ease;
+			}
+			.mosaic .fallback-bg {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				transition: transform 0.4s ease;
+				background-repeat: repeat;
+				background-size: 160px 160px;
 			}
 			.mosaic a:hover img,
 			.mosaic a:hover .fallback-bg {
@@ -128,7 +136,7 @@ function fallbackTexture(id: string) {
 		<main>
 			<ul class="mosaic">
 				{
-					posts.map((post: CollectionEntry<'blog'>) => (
+					posts.map((post) => (
 						<li class={post.data.size}>
 							<a href={`/blog/${post.id}/`}>
 								{post.data.heroImage ? (
