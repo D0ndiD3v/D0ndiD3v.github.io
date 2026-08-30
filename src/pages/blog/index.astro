@@ -21,12 +21,39 @@ function hashString(str: string) {
 	return Math.abs(hash);
 }
 
+function seededRandom(seed: number) {
+	let s = seed;
+	return () => {
+		s = (s * 9301 + 49297) % 233280;
+		return s / 233280;
+	};
+}
+
 function fallbackTexture(id: string) {
 	const h = hashString(id);
-	const yOffset = (h % 20) - 10;
-	const c1 = h % 2 === 0 ? '%2333513F' : '%239C6B45';
-	const c2 = h % 2 === 0 ? '%239C6B45' : '%2333513F';
-	const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><path d='M0 ${20 + yOffset} Q 40 ${0 + yOffset} 80 ${20 + yOffset} T 160 ${20 + yOffset}' stroke='${c1}' fill='none' stroke-width='1' opacity='0.4'/><path d='M0 ${60 + yOffset} Q 40 ${40 + yOffset} 80 ${60 + yOffset} T 160 ${60 + yOffset}' stroke='${c2}' fill='none' stroke-width='1' opacity='0.3'/><path d='M0 ${100 + yOffset} Q 40 ${80 + yOffset} 80 ${100 + yOffset} T 160 ${100 + yOffset}' stroke='${c1}' fill='none' stroke-width='1' opacity='0.3'/><path d='M0 ${140 + yOffset} Q 40 ${120 + yOffset} 80 ${140 + yOffset} T 160 ${140 + yOffset}' stroke='${c2}' fill='none' stroke-width='1' opacity='0.25'/></svg>`;
+	const rand = seededRandom(h);
+	const colors = ['%2333513F', '%239C6B45'];
+	let paths = '';
+
+	for (let i = 0; i < 7; i++) {
+		const baseY = 30 + i * 45 + (rand() * 20 - 10);
+		const amp = 15 + rand() * 35;
+		const freq = 0.5 + rand() * 1.5;
+		const phase = rand() * 100;
+		const color = colors[i % 2];
+		const opacity = (0.3 + rand() * 0.35).toFixed(2);
+		const width = (1 + rand()).toFixed(1);
+
+		let d = `M -20 ${baseY}`;
+		for (let x = -20; x <= 420; x += 20) {
+			const y = baseY + Math.sin((x + phase) * 0.02 * freq) * amp;
+			d += ` L ${x} ${y.toFixed(1)}`;
+		}
+
+		paths += `<path d='${d}' stroke='${color}' fill='none' stroke-width='${width}' opacity='${opacity}'/>`;
+	}
+
+	const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'>${paths}</svg>`;
 	return `linear-gradient(var(--color-panel), var(--color-panel)), url("data:image/svg+xml,${svg}")`;
 }
 ---
@@ -79,8 +106,9 @@ function fallbackTexture(id: string) {
 				width: 100%;
 				height: 100%;
 				transition: transform 0.4s ease;
-				background-repeat: repeat;
-				background-size: 160px 160px;
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
 			}
 			.mosaic a:hover img,
 			.mosaic a:hover .fallback-bg {
