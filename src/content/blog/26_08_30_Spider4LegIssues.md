@@ -4,7 +4,7 @@ description: 'First devlog: what this blog is, why my spiders looked like headcr
 pubDate: 2026-08-30
 size: 'large'
 heroImage: '../../assets/4legissuespreview.png'
-tags: ['spider-sim', 'devlog', 'godot']
+tags: ['spider-sim', 'devlog', 'gait', 'godot']
 ---
 
 This is going to be mostly this: a problem, what I tried, why I landed where I did. Expect dead ends and hurdles as often as clean wins. First one's about legs and a little bit about color.
