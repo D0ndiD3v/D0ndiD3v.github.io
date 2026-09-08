@@ -23,7 +23,7 @@ I expected, I think, some kind of moment. Two spiders noticing each other, appro
 The population settling in. It plateaus somewhere around the low thirties/high twenties and doesn't push much past that, and when it dips below twenty, it recovers fast. Faster than I expected. That part genuinely worked the way I wanted it to.
 
 <details>
-<summary><strong>For the code-curious</strong> — click to expand</summary>
+<summary><strong>For the code-curious</strong> - click to expand</summary>
 
 Reproduction cost scales with population, past a soft cap of 20 (set by me), each spider above that threshold makes reproducing slightly more expensive. It's a deliberate cost curve, not emergent scarcity. Over several minutes at 4x speed, population held in roughly an 18-28 band, which is exactly the equilibrium it was tuned to hit.
 

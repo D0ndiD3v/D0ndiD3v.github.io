@@ -19,7 +19,7 @@ Picture a chair. Four legs, each starting at a corner of the seat. Now imagine t
 This is the part that actually frustrated me the most. Every time I thought I'd spotted the cause, changing it did close to nothing. I went through the stride math a few times over and couldn't find a discrepancy. Neither an obvious minus sign, nor an obviously wrong number.
 
 <details>
-<summary><strong>For the code-curious</strong> — click to expand</summary>
+<summary><strong>For the code-curious</strong> - click to expand</summary>
 
 The suspects were, in order: stride-anticipation sign flips, per-leg anticipation bias. Neither one moved the needle. Eventually I confirmed, by printing the actual values, that the base natural-stance math (`naturalOffsetLocal`) was symmetric front-to-back all along. The math wasn't lying to me. Something else was.
 
