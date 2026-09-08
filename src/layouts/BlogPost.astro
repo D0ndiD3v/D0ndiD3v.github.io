@@ -58,6 +58,25 @@ const { title, description, pubDate, updatedDate, heroImage, tags, readingTime }
 				display: inline-block;
 				margin: 0.5em 0;
 			}
+			:global(details) {
+	border: 1px solid var(--color-accent-secondary);
+	border-radius: 8px;
+	padding: 0.8em 1em;
+	margin: 1.5em 0;
+	background: var(--color-panel);
+}
+:global(details[open]) {
+	border-color: var(--color-accent-primary);
+}
+:global(summary) {
+	cursor: pointer;
+	font-family: 'IBM Plex Mono', monospace;
+	color: var(--color-accent-secondary);
+}
+:global(details[open] summary) {
+	color: var(--color-accent-primary);
+	margin-bottom: 0.6em;
+}
 			.tags {
 				display: flex;
 				gap: 0.5em;
