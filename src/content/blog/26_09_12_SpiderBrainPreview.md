@@ -2,7 +2,7 @@
 title: 'Now I can see how it works from the inside'
 description: 'Finally we have the ability to picture the inside of the brain.'
 pubDate: 2026-09-12
-size: 'tall'
+size: 'large'
 tags: ['spider-sim', 'devlog', 'godot', 'ui']
 ---
 
