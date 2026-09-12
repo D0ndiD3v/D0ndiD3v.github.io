@@ -2,7 +2,7 @@
 title: 'This is the begining'
 description: 'Welcome to the start of my adventure with godot, where I poke at things until I make something worthwhile!'
 pubDate: 2026-08-28
-size: 'large'
+size: 'wide'
 tags: ['spider-sim', 'devlog', 'godot']
 ---
 
