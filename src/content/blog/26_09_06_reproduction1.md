@@ -14,7 +14,7 @@ Two spiders near each other, both energized enough, roll the dice, and if it hit
 
 <span class="margin-note">I would never thing I'd be so excited about spiders breeding, yet here I am, invading their privacy like some pervert.</span>
 
-## No moment, and that surprised me
+## It happened, just like that
 
 I expected, I think, some kind of moment. Two spiders noticing each other, approaching, something to point at. That's not what happened. There's no real "finding" here yet, spiders that happen to be close enough just roll a chance to mate, and a child appears somewhere nearby. I didn't catch anything that felt like courtship, because there isn't any yet. That's a little anticlimactic to admit, but it's the honest state of it.
 
