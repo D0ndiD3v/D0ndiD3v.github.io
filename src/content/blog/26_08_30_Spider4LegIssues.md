@@ -7,44 +7,77 @@ heroImage: '../../assets/4legissuespreview.png'
 tags: ['spider-sim', 'devlog', 'gait', 'godot']
 ---
 
-This is going to be mostly this: a problem, what I tried, why I landed where I did. Expect dead ends and hurdles as often as clean wins. First one's about legs and a little bit about color.
+The main idea for this post is presenting a problem I stumbled across, what I tried to get rid of it and what I landed on. I'm not afraid to show my mistakes, better yet, I want to include them here, to help me track my progress better, and to flesh out difficulties of making a simulator such as this one.
 
 ## The bunny-hopping problem
 
-For a while, my spiders had a slight *problem*. The legs moved, but the body, well... didn't. Every set of legs took their step in perfect unison, which meant the whole gait looked less like walking and more like a slightly panicked bunny, hopping through the grass, except the body never actually hopped. It just sat there, hovering calmly, while four legs flailed beside it like an afterthought.
+The main issue was the way my spiders walked. The unfortunate reality was that they took their steps in unison, the steps weren't staggered at all, and it gave the impression that the spiders were jumping or bunyhopping, or at least that's something i'd like to say, but it was more than that. Since the body of the spider is hovering at a constant height, the whole animation seemed very artificial and simply weird, legs flailing about, while the body stayed completely still, simply gliding in one direction.
 
 <span class="margin-note">That was an interesting sight, I'm sure i've seen something like that already, I thought to myself.</span>
 
-Visually, the closest comparison I keep coming back to is *Half-Life*'s headcrabs, simply a blob-shaped little insect(?). It was not a creature that used its legs, but a creature which legs were simply *near*.
+ It made me feel uneasy, but it had a certain vibe to it, especially the four-legged spiders, those ones reminded me very much of *Half-Life*'s headcrabs, just simple little blob-shaped creatures roaming about.
 
-## Why?: they all stepped together
+## Why they all stepped together
 
 <details>
 <summary><strong>For the code-curious</strong> - click to expand</summary>
 
-The default procedural leg movement had every leg evaluating its step timing against the same threshold at the same time. No offset, no stagger, so when one leg decided it was time to step, they all (or sometimes just most) did. The fix was a `ThresholdMultiplier` per leg, alternating a small positive/negative variance based on whether the leg's index is even or odd. Nothing that extraordinary, but just enough to break the harmony.
+Here is how the legs are getting split into two alternating groups:
+
+```csharp
+int pairIndex = index / 2;
+int sideBit = legData.Side > 0 ? 0 : 1;
+bool delayed = (pairIndex + sideBit) % 2 == 1;
+```
+
+And this is what the grouping actually does for the gait:
+
+```csharp
+if (!leg.IsDelayedGroup)
+{
+    StartStep(leg, target);
+}
+else
+{
+    leg.PendingDelay -= dt;
+    if (leg.PendingDelay <= 0f)
+        StartStep(leg, target);
+}
+```
 
 </details>
 
-The actual fix, once I stopped overthinking it, was almost embarrassingly simple: **stop letting them agree.** If every leg steps on its own slightly-offset schedule instead of a shared one, the harmony gets disrupted, and the gait stops reading as *one blob doing four things at once* and starts reading as *one blob doing one thing with four legs.*
-
-It's not perfect. Some configurations still look a little off - I can't and won't pretend this is solved. But it's a *step* in the right direction, and for a first real fix, I'll take it as a win.
+Simply speaking, the legs moved at the same time, because they were built to do it that way, a number croses a certain threshold, the leg takes a step, the problem was that the spiders were moving more or less straight, which meant that sets of legs crossed the threshold at the same time, thus making both legs move at the same time. The answer to that was surprisingly simple once I dismantled that thought in my head, just stagger the steps by adding an arbitrary number, and hey, it worked. Simply adding a slight offset helped the gait immensly, so much so that it was actually bearable to watch the spiders move around the planet for once. It's not perfect though, some configurations still look a little off, and I won't pretend this is solved. Nonetheless it's a *step* in the right direction, and for a first real fix, I'll count it as a win.
 
 ## Color, and why it's inherited
 
-Separately, spiders now inherit their coloring. Body hue is shared across a lineage, with body and leg saturation/value clamped in opposite directions so the two don't collapse into the same shade.
+On a side not, spiders now inherit their coloring. Body hue is shared across a lineage, with body and leg saturation set up in a way so the two don't collapse into the same shade. The reasoning behind that was less technical than it sounds, I wanted tracking a lineage to feel more *personal*.
 
 <details>
 <summary><strong>For the code-curious</strong> - click to expand</summary>
 
-`BodyGenome.cs` has a shared `Hue` gene, plus `BodySatVal` (clamped >=0.5) and `LegSatVal` (clamped <=0.5), with `UpdateColors()` deriving the actual segment and leg colors from them. Mutation perturbs each independently. The clamps are simple range checks for now, meaning no fancy curve, just "don't let this go below/above x." It works for where the project's at.
+`BodyGenome.cs` has a shared `Hue` gene, plus `BodySatVal` and `LegSatVal`, with `UpdateColors()` deriving the actual segment and leg colors from them. The values are set to arbitrary numbers for now, meaning no fancy curve, just "don't let them turn muddy." It works for where the project's at.
+
+```csharp
+public float Hue = 0.08f;
+public float BodySatVal = 0.6f;
+public float LegSatVal = 0.3f;
+public Color LegColor;
+```
+```csharp
+public void UpdateColors()
+{
+    Segments[0].Color = Color.FromHsv(Hue, BodySatVal, BodySatVal);
+    LegColor = Color.FromHsv(Hue, LegSatVal, LegSatVal);
+}
+```
 
 </details>
 
-The reasoning was less technical than it sounds: I wanted tracking a lineage to feel *personal*. If color carries forward through generations, you can watch a bloodline drift, and honestly, you can also just root for whichever one you like best. We all have a favorite color. I'm not going to pretend I'd be neutral about which one wins.
+If color carries forward through generations, you can watch a lineage drift, and honestly, you can also just root for whichever one you like best. We all have a favorite color, and I'm not going to pretend I'd be neutral about which one wins.
 
 <span class="margin-note">I can't make one of the colors better, I'm not-... actually... I am the one in charge of this!</span>
 
-## What's next?
+## What's next
 
-More of this, obviously! Problems, half-fixes, the occasional actual solution. Gait's not done. Color's not done. Neither is the planet they're all crawling around on, and that's what makes it beautiful.
+More of this, obviously! Problems, half-fixes, the occasional actual solution. Neither the gait nor the color is done, the planet they're all crawling around on isn't looking the best either, and that's what makes it beautiful.

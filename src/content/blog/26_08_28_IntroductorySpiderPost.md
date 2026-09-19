@@ -6,7 +6,7 @@ size: 'wide'
 tags: ['spider-sim', 'devlog', 'godot']
 ---
 
-My main idea for this simulator, was a deeper rooted need to observe generations pass, genes change, and be able to actually witness a variety of lifetimes in a manageable time frame. My instinct told me to look at it like I'm making a terrarium for an ant colony in my room, just preparing the habitat, gathering the species and watching them live.
+My main idea for this simulator, was a deeper rooted need to observe generations pass, genes change, and to be able to actually witness a variety of lifetimes in a manageable time frame. My instinct told me to look at it like I'm making a terrarium for an ant colony in my room, just preparing the habitat, gathering the species and watching them live.
 
 ## Where this started
 
