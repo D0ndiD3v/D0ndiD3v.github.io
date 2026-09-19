@@ -7,15 +7,13 @@ heroImage: '../../assets/4legissuespreview.png'
 tags: ['spider-sim', 'devlog', 'gait', 'godot']
 ---
 
-The main idea for this post is presenting a problem I stumbled across, what I tried to get rid of it and what I landed on. I'm not afraid to show my mistakes, better yet, I want to include them here, to help me track my progress better, and to flesh out difficulties of making a simulator such as this one.
+The main idea for this post is presenting a problem I stumbled across, what I tried to get rid of it, and what I finally landed on. I'm not afraid to show my mistakes, better yet, I want to include them here, to help me track my progress better, and to flesh out difficulties of making a simulator such as this one.
 
 ## The bunny-hopping problem
 
-The main issue was the way my spiders walked. The unfortunate reality was that they took their steps in unison, the steps weren't staggered at all, and it gave the impression that the spiders were jumping or bunyhopping, or at least that's something i'd like to say, but it was more than that. Since the body of the spider is hovering at a constant height, the whole animation seemed very artificial and simply weird, legs flailing about, while the body stayed completely still, simply gliding in one direction.
+The main issue was the way my spiders walked. The unfortunate reality was that they took their steps in unison, the steps weren't staggered at all, and it gave the impression that the spiders were jumping or bunnyhopping, or at least that's something i'd like to say, but it was more than that. Since the body of the spider is hovering at a constant height, the whole animation seemed very artificial and simply weird, legs flailing about, while the body stayed completely still, simply gliding in one direction. It made me feel uneasy, but it had a certain vibe to it, especially the four-legged spiders, those ones reminded me very much of *Half-Life*'s headcrabs, just simple little blob-shaped creatures roaming about.
 
-<span class="margin-note">That was an interesting sight, I'm sure i've seen something like that already, I thought to myself.</span>
-
- It made me feel uneasy, but it had a certain vibe to it, especially the four-legged spiders, those ones reminded me very much of *Half-Life*'s headcrabs, just simple little blob-shaped creatures roaming about.
+<span class="margin-note">That was an interesting sight, I'm sure I've seen something like that already, I thought to myself.</span>
 
 ## Why they all stepped together
 
@@ -47,11 +45,11 @@ else
 
 </details>
 
-Simply speaking, the legs moved at the same time, because they were built to do it that way, a number croses a certain threshold, the leg takes a step, the problem was that the spiders were moving more or less straight, which meant that sets of legs crossed the threshold at the same time, thus making both legs move at the same time. The answer to that was surprisingly simple once I dismantled that thought in my head, just stagger the steps by adding an arbitrary number, and hey, it worked. Simply adding a slight offset helped the gait immensly, so much so that it was actually bearable to watch the spiders move around the planet for once. It's not perfect though, some configurations still look a little off, and I won't pretend this is solved. Nonetheless it's a *step* in the right direction, and for a first real fix, I'll count it as a win.
+Simply speaking, the legs moved at the same time, because they were built to do it that way, a number crosses a certain threshold, the leg takes a step, the problem was that the spiders were moving more or less straight, which meant that sets of legs crossed the threshold at the same time, thus making both legs move at the same time. The answer to that was surprisingly simple once I dismantled that thought in my head, just stagger the steps by adding an arbitrary number, and hey, it worked. Simply adding a slight offset helped the gait immensely, so much so that it was actually bearable to watch the spiders move around the planet for once. It's not perfect though, some configurations still look a little off, and I won't pretend this is solved. Nonetheless it's a *step* in the right direction, and for a first real fix, I'll count it as a win.
 
 ## Color, and why it's inherited
 
-On a side not, spiders now inherit their coloring. Body hue is shared across a lineage, with body and leg saturation set up in a way so the two don't collapse into the same shade. The reasoning behind that was less technical than it sounds, I wanted tracking a lineage to feel more *personal*.
+On a side note, spiders now inherit their coloring. Body hue is shared across a lineage, with body and leg saturation set up in a way so the two don't collapse into the same shade. The reasoning behind that was less technical than it sounds, I wanted tracking a lineage to feel more *personal*.
 
 <details>
 <summary><strong>For the code-curious</strong> - click to expand</summary>
